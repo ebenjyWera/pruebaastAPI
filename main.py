@@ -21,9 +21,20 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    return {"FastAPI": "Prueba fast api"}
 
-@app.post("/documento/")
-async def crear_documento(documento: UploadFile = File(...)):
-    contenido = await documento.read()
-    return {"nombre": documento.filename, "tamaño": len(contenido)}
+@app.post("/cargarDocumento/{bl}/{idOrden}")
+async def cargarDocumento(bl,idOrden,files: List[UploadFile] = File(...)):
+    listdocs = []
+    try:
+        for file in files:
+            print(file.filename)
+            with open(file.filename, 'wb') as myfile:
+                content = await file.read()
+                myfile.write(content)
+                myfile.close()
+
+            return {"nombre": file.filename, "tamaño": len(content)}
+    except Exception as e:
+        print(e)
+        return {'Res':e}
