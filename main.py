@@ -5,7 +5,7 @@ from typing import Union
 from typing import Union, List
 from fastapi import FastAPI, UploadFile, File
 from datetime import datetime, timedelta
-from clases import Usuario,Conexion,Ordenes,Documentos
+# from clases import Usuario,Conexion,Ordenes,Documentos
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
