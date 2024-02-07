@@ -34,7 +34,7 @@ async def cargarDocumento(bl,idOrden,files: List[UploadFile] = File(...)):
                 myfile.write(content)
                 myfile.close()
 
-            return {"nombre": file.filename, "tamaño": len(content)}
+        return {'RES':'Documento cargado'}
     except Exception as e:
         print(e)
-        return {'Res':e}
+        return {'Res':'Error'}
