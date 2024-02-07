@@ -23,21 +23,7 @@ app.add_middleware(
 def read_root():
     return {"Hello": "World"}
 
-@app.post("/cargarDocumento/{bl}/{idOrden}")
-async def cargarDocumento(bl,idOrden,files: List[UploadFile] = File(...)):
-    listdocs = []
-    try:
-        # for file in files:
-        #     print(file.filename)
-        #     with open(file.filename, 'wb') as myfile:
-        #         content = await file.read()
-        #         myfile.write(content)
-        #         myfile.close()
-
-        #         if not os.path.exists('documentos/'+str(idOrden)+''):
-        #             os.mkdir('documentos/'+str(idOrden)+'')
-            file = await files.read()
-            return {"nombre": file.filename, "tamaño": len(files)}
-    except Exception as e:
-        print(e)
-        return {'Res':e}
+@app.post("/documento/")
+async def crear_documento(documento: UploadFile = File(...)):
+    contenido = await documento.read()
+    return {"nombre": documento.filename, "tamaño": len(contenido)}
