@@ -27,21 +27,17 @@ def read_root():
 async def cargarDocumento(bl,idOrden,files: List[UploadFile] = File(...)):
     listdocs = []
     try:
-        for file in files:
-            print(file.filename)
-            with open(file.filename, 'wb') as myfile:
-                content = await file.read()
-                myfile.write(content)
-                myfile.close()
+        # for file in files:
+        #     print(file.filename)
+        #     with open(file.filename, 'wb') as myfile:
+        #         content = await file.read()
+        #         myfile.write(content)
+        #         myfile.close()
 
-                if not os.path.exists('documentos/'+str(idOrden)+''):
-                    os.mkdir('documentos/'+str(idOrden)+'')
-
-                extension = os.path.splitext(str(file.filename))
-                rutaDoc = r"documentos/"+str(idOrden)+"/BL_"+str(bl)+extension[1]
-                shutil.move(file.filename,rutaDoc)
-                print('Documentos movidos')
-                return {'Res':'enviado'}
+        #         if not os.path.exists('documentos/'+str(idOrden)+''):
+        #             os.mkdir('documentos/'+str(idOrden)+'')
+            file = await files.read()
+            return {"nombre": file.filename, "tamaño": len(files)}
     except Exception as e:
         print(e)
         return {'Res':e}
