@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+import base64
 from pathlib import Path
 from typing import Union
 from typing import Union, List
@@ -33,11 +34,9 @@ async def cargarDocumento(bl,idOrden,files: List[UploadFile] = File(...)):
             with open(file.filename, 'wb') as myfile:
                 content = await file.read()
                 myfile.write(content)
-                bytes = myfile.lengthSync()
-                # Convertir a MB
-                mb = bytes / (1024 * 1024)
-                print('Tamano archivo',mb)
                 myfile.close()
+            base64_string = base64.b64encode(content).decode('ascii')
+            print(base64_string)
 
         return {'RES':'Documento cargado'}
     except Exception as e:
