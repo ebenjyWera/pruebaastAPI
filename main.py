@@ -1,6 +1,7 @@
 import json
 import os
 import shutil
+from pathlib import Path
 from typing import Union
 from typing import Union, List
 from fastapi import FastAPI, UploadFile, File
@@ -32,6 +33,10 @@ async def cargarDocumento(bl,idOrden,files: List[UploadFile] = File(...)):
             with open(file.filename, 'wb') as myfile:
                 content = await file.read()
                 myfile.write(content)
+                bytes = myfile.lengthSync()
+                # Convertir a MB
+                mb = bytes / (1024 * 1024)
+                print('Tamano archivo',mb)
                 myfile.close()
 
         return {'RES':'Documento cargado'}
